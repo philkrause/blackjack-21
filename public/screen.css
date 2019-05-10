@@ -28,6 +28,7 @@ section {
 }
 
 .deal-button {
+  background-color: beige;
   color: blue;
   font-size: 1rem;
   padding: 2rem;
