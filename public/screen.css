@@ -28,6 +28,13 @@ section {
   color: black;
 }
 
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-around;
+}
+
 .deal-button {
   background-color: beige;
   color: blue;
@@ -36,4 +43,24 @@ section {
   padding: 2rem;
   box-shadow: 5px 8px #888888;
   border-radius: 1rem;
+}
+
+.stay-button {
+  background-color: beige;
+  color: blue;
+  font-size: 1rem;
+  margin-top: 20rem;
+  padding: 2rem;
+  box-shadow: 5px 8px #888888;
+  border-radius: 1rem;
+}
+
+.display-winner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red;
+}
+
+.player-one-cards {
 }

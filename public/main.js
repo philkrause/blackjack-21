@@ -3,70 +3,16 @@
 
 // // let randomCard = [Math.floor(Math.random() * deck.length)]
 
-// // let chooseCard = () => {
-// //   const cardHolder = document.createElement('section')
-// //   cardHolder.textContent = deck[randomCard]
-// //   document.querySelector('.container').appendChild(cardHolder)
-// //   console.log(chooseCard)
-// //
-const images = {
-  ...[
-    '/images/2_of_clubs.svg',
-    '/images/2_of_diamonds.svg',
-    '/images/2_of_hearts.svg',
-    '/images/2_of_spades.svg',
-    '/images/3_of_clubs.svg',
-    '/images/3_of_diamonds.svg',
-    '/images/3_of_hearts.svg',
-    '/images/3_of_spades.svg',
-    '/images/4_of_clubs.svg',
-    '/images/4_of_diamonds.svg',
-    '/images/4_of_hearts.svg',
-    '/images/4_of_spades.svg',
-    '/images/5_of_clubs.svg',
-    '/images/5_of_diamonds.svg',
-    '/images/5_of_hearts.svg',
-    '/images/5_of_spades.svg',
-    '/images/6_of_clubs.svg',
-    '/images/6_of_diamonds.svg',
-    '/images/6_of_hearts.svg',
-    '/images/6_of_spades.svg',
-    '/images/7_of_clubs.svg',
-    '/images/7_of_diamonds.svg',
-    '/images/7_of_hearts.svg',
-    '/images/7_of_spades.svg',
-    '/images/8_of_clubs.svg',
-    '/images/8_of_diamonds.svg',
-    '/images/8_of_hearts.svg',
-    '/images/8_of_spades.svg',
-    '/images/9_of_clubs.svg',
-    '/images/9_of_diamonds.svg',
-    '/images/9_of_hearts.svg',
-    '/images/9_of_spades.svg',
-    '/images/10_of_clubs.svg',
-    '/images/10_of_diamonds.svg',
-    '/images/10_of_hearts.svg',
-    '/images/10_of_spades.svg',
-    '/images/ace_of_clubs.svg',
-    '/images/ace_of_diamonds.svg',
-    '/images/ace_of_hearts.svg',
-    '/images/ace_of_spades.svg',
-    '/images/jack_of_clubs.svg',
-    '/images/jack_of_diamonds.svg',
-    '/images/jack_of_hearts.svg',
-    '/images/jack_of_spades.svg',
-    '/images/king_of_clubs.svg',
-    '/images/king_of_diamonds.svg',
-    '/images/king_of_hearts.svg',
-    '/images/king_of_spades.svg',
-    '/images/queen_of_clubs.svg',
-    '/images/queen_of_diamonds.svg',
-    '/images/queen_of_hearts.svg',
-    '/images/queen_of_spades.svg'
-  ]
-}
+// let chooseCard = () => {
+//   const cardHolder = document.createElement('section')
+//   cardHolder.textContent = deck[randomCard]
+//   document.querySelector('.container').appendChild(cardHolder)
+//   console.log(chooseCard)
+// }
+//
 
 const suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
+
 const ranks = [
   { face: 2, value: 2 },
   { face: 3, value: 3 },
@@ -84,7 +30,7 @@ const ranks = [
 ]
 
 const deck = []
-deck.push(images)
+
 let createDeck = () => {
   for (let j = 0; j < ranks.length; j++) {
     const rank = ranks[j]
@@ -93,14 +39,13 @@ let createDeck = () => {
       const card = {
         face: rank.face,
         value: rank.value,
-        suit: suit
+        suit: suit,
+        imageUrl: `/images/${rank.face}_of_${suit}.svg`.toLowerCase()
       }
-
       deck.push(card)
     }
   }
 
-  //console.log(deck)
   return shuffle(deck)
 }
 
@@ -134,8 +79,12 @@ const dealCards = () => {
   const playerOneTotal = playerOne.reduce(add)
   const playerTwoTotal = playerTwo.reduce(add)
 
-  const cardHolder = document.createElement('section')
-  cardHolder.textContent = console.log(playerOneTotal)
+  playerOne.forEach(card => {
+    const cardHolder = document.createElement('img')
+    cardHolder.src = card.imageUrl
+    document.querySelector('.player-one-cards').appendChild(cardHolder)
+  })
+
   console.log(playerTwoTotal)
 
   if (playerOneTotal === 21) {
@@ -148,6 +97,66 @@ const main = () => {
   dealCards()
 }
 
+document.addEventListener('DOMContentLoaded', main)
+
+// document.querySelector('.container').addEventListener('click', chooseCard)
+
+// document.addEventListener('click', dealcards)
+
+//const imageArray = [
+//   '/images/2_of_clubs.svg',
+//   '/images/2_of_diamonds.svg',
+//   '/images/2_of_hearts.svg',
+//   '/images/2_of_spades.svg',
+//   '/images/3_of_clubs.svg',
+//   '/images/3_of_diamonds.svg',
+//   '/images/3_of_hearts.svg',
+//   '/images/3_of_spades.svg',
+//   '/images/4_of_clubs.svg',
+//   '/images/4_of_diamonds.svg',
+//   '/images/4_of_hearts.svg',
+//   '/images/4_of_spades.svg',
+//   '/images/5_of_clubs.svg',
+//   '/images/5_of_diamonds.svg',
+//   '/images/5_of_hearts.svg',
+//   '/images/5_of_spades.svg',
+//   '/images/6_of_clubs.svg',
+//   '/images/6_of_diamonds.svg',
+//   '/images/6_of_hearts.svg',
+//   '/images/6_of_spades.svg',
+//   '/images/7_of_clubs.svg',
+//   '/images/7_of_diamonds.svg',
+//   '/images/7_of_hearts.svg',
+//   '/images/7_of_spades.svg',
+//   '/images/8_of_clubs.svg',
+//   '/images/8_of_diamonds.svg',
+//   '/images/8_of_hearts.svg',
+//   '/images/8_of_spades.svg',
+//   '/images/9_of_clubs.svg',
+//   '/images/9_of_diamonds.svg',
+//   '/images/9_of_hearts.svg',
+//   '/images/9_of_spades.svg',
+//   '/images/10_of_clubs.svg',
+//   '/images/10_of_diamonds.svg',
+//   '/images/10_of_hearts.svg',
+//   '/images/10_of_spades.svg',
+//   '/images/ace_of_clubs.svg',
+//   '/images/ace_of_diamonds.svg',
+//   '/images/ace_of_hearts.svg',
+//   '/images/ace_of_spades.svg',
+//   '/images/jack_of_clubs.svg',
+//   '/images/jack_of_diamonds.svg',
+//   '/images/jack_of_hearts.svg',
+//   '/images/jack_of_spades.svg',
+//   '/images/king_of_clubs.svg',
+//   '/images/king_of_diamonds.svg',
+//   '/images/king_of_hearts.svg',
+//   '/images/king_of_spades.svg',
+//   '/images/queen_of_clubs.svg',
+//   '/images/queen_of_diamonds.svg',
+//   '/images/queen_of_hearts.svg',
+//   '/images/queen_of_spades.svg'
+// ]
 // const deck = []
 // const suit = 4
 // const rank = 13
@@ -174,6 +183,3 @@ const main = () => {
 //       chessSet.push(color + position)
 //     })
 // })
-// document.querySelector('.container').addEventListener('click', chooseCard)
-document.addEventListener('DOMContentLoaded', main)
-// document.addEventListener('click', dealcards)
