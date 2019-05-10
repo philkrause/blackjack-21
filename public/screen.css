@@ -1,5 +1,5 @@
 :root {
-  font: 16px / 1 sans-serif;
+  font: 24px / 1 sans-serif;
 }
 
 html {
@@ -13,6 +13,7 @@ body {
 body,
 .container {
   min-height: 100vh;
+  background-color: green;
 }
 
 .container {
@@ -31,6 +32,8 @@ section {
   background-color: beige;
   color: blue;
   font-size: 1rem;
+  margin-top: 20rem;
   padding: 2rem;
   box-shadow: 5px 8px #888888;
+  border-radius: 1rem;
 }

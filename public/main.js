@@ -8,11 +8,66 @@
 // //   cardHolder.textContent = deck[randomCard]
 // //   document.querySelector('.container').appendChild(cardHolder)
 // //   console.log(chooseCard)
-// // }
+// //
+const images = {
+  ...[
+    '/images/2_of_clubs.svg',
+    '/images/2_of_diamonds.svg',
+    '/images/2_of_hearts.svg',
+    '/images/2_of_spades.svg',
+    '/images/3_of_clubs.svg',
+    '/images/3_of_diamonds.svg',
+    '/images/3_of_hearts.svg',
+    '/images/3_of_spades.svg',
+    '/images/4_of_clubs.svg',
+    '/images/4_of_diamonds.svg',
+    '/images/4_of_hearts.svg',
+    '/images/4_of_spades.svg',
+    '/images/5_of_clubs.svg',
+    '/images/5_of_diamonds.svg',
+    '/images/5_of_hearts.svg',
+    '/images/5_of_spades.svg',
+    '/images/6_of_clubs.svg',
+    '/images/6_of_diamonds.svg',
+    '/images/6_of_hearts.svg',
+    '/images/6_of_spades.svg',
+    '/images/7_of_clubs.svg',
+    '/images/7_of_diamonds.svg',
+    '/images/7_of_hearts.svg',
+    '/images/7_of_spades.svg',
+    '/images/8_of_clubs.svg',
+    '/images/8_of_diamonds.svg',
+    '/images/8_of_hearts.svg',
+    '/images/8_of_spades.svg',
+    '/images/9_of_clubs.svg',
+    '/images/9_of_diamonds.svg',
+    '/images/9_of_hearts.svg',
+    '/images/9_of_spades.svg',
+    '/images/10_of_clubs.svg',
+    '/images/10_of_diamonds.svg',
+    '/images/10_of_hearts.svg',
+    '/images/10_of_spades.svg',
+    '/images/ace_of_clubs.svg',
+    '/images/ace_of_diamonds.svg',
+    '/images/ace_of_hearts.svg',
+    '/images/ace_of_spades.svg',
+    '/images/jack_of_clubs.svg',
+    '/images/jack_of_diamonds.svg',
+    '/images/jack_of_hearts.svg',
+    '/images/jack_of_spades.svg',
+    '/images/king_of_clubs.svg',
+    '/images/king_of_diamonds.svg',
+    '/images/king_of_hearts.svg',
+    '/images/king_of_spades.svg',
+    '/images/queen_of_clubs.svg',
+    '/images/queen_of_diamonds.svg',
+    '/images/queen_of_hearts.svg',
+    '/images/queen_of_spades.svg'
+  ]
+}
 
-const suits = ['Hearts', 'Diamonds', 'Spades', 'Clubs']
+const suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
 const ranks = [
-  { face: 'Ace', value: 11 },
   { face: 2, value: 2 },
   { face: 3, value: 3 },
   { face: 4, value: 4 },
@@ -22,27 +77,30 @@ const ranks = [
   { face: 8, value: 8 },
   { face: 9, value: 9 },
   { face: 10, value: 10 },
+  { face: 'Ace', value: 1 },
   { face: 'Jack', value: 10 },
-  { face: 'Queen', value: 10 },
-  { face: 'King', value: 10 }
+  { face: 'King', value: 10 },
+  { face: 'Queen', value: 10 }
 ]
 
 const deck = []
-
+deck.push(images)
 let createDeck = () => {
-  for (let i = suits.length; i > 0; i--) {
-    const suit = suits[i]
-    for (let j = 0; j < ranks.length; j++) {
-      const rank = ranks[j]
+  for (let j = 0; j < ranks.length; j++) {
+    const rank = ranks[j]
+    for (let i = 0; i < suits.length; i++) {
+      const suit = suits[i]
       const card = {
         face: rank.face,
         value: rank.value,
         suit: suit
       }
+
       deck.push(card)
     }
   }
-  // console.log(deck)
+
+  //console.log(deck)
   return shuffle(deck)
 }
 
@@ -59,24 +117,25 @@ const shuffle = () => {
   }
 }
 
-// let randomNum = Math.floor(Math.random() * 52)
-// let shuffledDeck = this.cards.map(x => x * randomNum)
-// console.log(cards)
+const playerOne = []
+const playerTwo = []
+console.log(playerOne)
+console.log(playerTwo)
+
 const dealCards = () => {
-  const playerOne = []
-  const playerTwo = []
   for (i = 2; i > 0; i--) {
     playerOne.push(deck.pop())
     playerTwo.push(deck.pop())
   }
-  console.log(playerOne)
-  console.log(playerTwo)
+
   const add = (a, b) => {
     return a.value + b.value
   }
   const playerOneTotal = playerOne.reduce(add)
   const playerTwoTotal = playerTwo.reduce(add)
-  console.log(playerOneTotal)
+
+  const cardHolder = document.createElement('section')
+  cardHolder.textContent = console.log(playerOneTotal)
   console.log(playerTwoTotal)
 
   if (playerOneTotal === 21) {
@@ -117,4 +176,4 @@ const main = () => {
 // })
 // document.querySelector('.container').addEventListener('click', chooseCard)
 document.addEventListener('DOMContentLoaded', main)
-document.addEventListener('click', dealcards)
+// document.addEventListener('click', dealcards)
