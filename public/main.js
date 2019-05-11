@@ -23,10 +23,10 @@ const ranks = [
   { face: 8, value: 8 },
   { face: 9, value: 9 },
   { face: 10, value: 10 },
-  { face: 'Ace', value: 1 },
   { face: 'Jack', value: 10 },
   { face: 'King', value: 10 },
-  { face: 'Queen', value: 10 }
+  { face: 'Queen', value: 10 },
+  { face: 'Ace', value: 1 }
 ]
 
 const deck = []
@@ -50,12 +50,10 @@ let createDeck = () => {
 }
 
 const shuffle = () => {
-  let deckLength = deck.length // Define the length of the deck
-
-  // Go through entire deck
-  for (deckLength - 1; deckLength >= 1; deckLength--) {
-    // Choose a random Card
-    const randomNum = Math.floor(Math.random() * (deckLength + 1))
+  let deckLength = deck.length - 1 // Define the length of the deck
+  for (deckLength; deckLength >= 1; deckLength--) {
+    // Go through entire deck
+    const randomNum = Math.floor(Math.random() * (deckLength + 1)) // Choose a random Card
     const cardHolder = deck[deckLength] // Place the first card (of the remaining deck) into an empty variable
     deck[deckLength] = deck[randomNum] // Take a random card and put it at the bottom of the remaining deck
     deck[randomNum] = cardHolder // Place the card we first took, into the where we pulled the random card was.
@@ -64,8 +62,6 @@ const shuffle = () => {
 
 const playerOne = []
 const playerTwo = []
-console.log(playerOne)
-console.log(playerTwo)
 
 const dealCards = () => {
   for (i = 2; i > 0; i--) {
@@ -73,35 +69,66 @@ const dealCards = () => {
     playerTwo.push(deck.pop())
   }
 
-  const add = (a, b) => {
-    return a.value + b.value
-  }
-  const playerOneTotal = playerOne.reduce(add)
-  const playerTwoTotal = playerTwo.reduce(add)
+  // const add = (a, b) => {
+  //   return a.value + b.value
+  // }
 
-  playerOne.forEach(card => {
-    const cardHolder = document.createElement('img')
-    cardHolder.src = card.imageUrl
-    document.querySelector('.player-one-cards').appendChild(cardHolder)
+  // const playerTwoTotal = playerTwo.reduce(add)
+
+  playerOne.forEach(p1card => {
+    const createP1CardElement = document.createElement('img')
+    createP1CardElement.src = p1card.imageUrl
+    document.querySelector('.player-one-cards').appendChild(createP1CardElement)
   })
 
-  console.log(playerTwoTotal)
+  playerTwo.forEach(p2card => {
+    const createP2CardElement = document.createElement('img')
+    createP2CardElement.src = p2card.imageUrl
+    document.querySelector('.player-two-cards').appendChild(createP2CardElement)
+  })
+}
 
-  if (playerOneTotal === 21) {
-    document.querySelector('.display-winner').textContent = 'BlackJack'
+const addPlayerOne = () => {
+  let playerOneTotal = 0
+  playerOne.forEach(card => {
+    playerOneTotal += card.value
+  })
+  console.log(playerOneTotal)
+  if (playerOneTotal === 20) {
+    document.querySelector('display-result').textContent = 'BlackJack'
   }
 }
+const addPlayerTwo = () => {
+  let playerTwoTotal = 0
+  playerTwo.forEach(card => {
+    playerTwoTotal += card.value
+  })
+  console.log(playerTwoTotal)
+}
+
+// if (this.playerOneTotal > 21) {
+//   document.querySelector('display-result').textContent = 'BUST'
+// }
+// if (playerOneTotal < 21) {
+// }
 
 const main = () => {
   createDeck()
   dealCards()
+  addPlayerOne()
+  addPlayerTwo()
 }
-
+// document.addEventListener('click', hitPlayerOne)
 document.addEventListener('DOMContentLoaded', main)
 
 // document.querySelector('.container').addEventListener('click', chooseCard)
 
 // document.addEventListener('click', dealcards)
+
+// let deckTotal = 0
+// playerDeck.forEach(card => {
+//   deckTotal += card.value
+// })
 
 //const imageArray = [
 //   '/images/2_of_clubs.svg',
