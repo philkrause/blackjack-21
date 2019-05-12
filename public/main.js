@@ -1,8 +1,3 @@
-// let cardNum = ['A', 2, 3, 3, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K']
-// let cardSuit = ['hearts', 'clubs', 'diamonds', 'spades']
-
-// // let randomCard = [Math.floor(Math.random() * deck.length)]
-
 // let chooseCard = () => {
 //   const cardHolder = document.createElement('section')
 //   cardHolder.textContent = deck[randomCard]
@@ -45,7 +40,6 @@ let createDeck = () => {
       deck.push(card)
     }
   }
-
   return shuffle(deck)
 }
 
@@ -62,69 +56,89 @@ const shuffle = () => {
 
 const playerOne = []
 const playerTwo = []
+let playerOneTotal = 0
+let playerTwoTotal = 0
 
 const dealCards = () => {
   for (i = 2; i > 0; i--) {
     playerOne.push(deck.pop())
     playerTwo.push(deck.pop())
   }
-
-  // const add = (a, b) => {
-  //   return a.value + b.value
-  // }
-
-  // const playerTwoTotal = playerTwo.reduce(add)
-
   playerOne.forEach(p1card => {
     const createP1CardElement = document.createElement('img')
     createP1CardElement.src = p1card.imageUrl
     document.querySelector('.player-one-cards').appendChild(createP1CardElement)
   })
-
+  addPlayerOne()
   playerTwo.forEach(p2card => {
     const createP2CardElement = document.createElement('img')
     createP2CardElement.src = p2card.imageUrl
     document.querySelector('.player-two-cards').appendChild(createP2CardElement)
   })
+  addPlayerTwo()
+}
+
+const createCardImage = () => {
+  playerOne.forEach(p1card => {
+    const createP1CardElement = document.createElement('img')
+    createP1CardElement.src = p1card.imageUrl
+    document.querySelector('.player-one-cards').appendChild(createP1CardElement)
+  })
 }
 
 const addPlayerOne = () => {
-  let playerOneTotal = 0
+  playerOneTotal = 0
   playerOne.forEach(card => {
     playerOneTotal += card.value
   })
-  console.log(playerOneTotal)
-  if (playerOneTotal === 20) {
-    document.querySelector('display-result').textContent = 'BlackJack'
-  }
+  // console.log(playerOne)
+  // console.log(playerOneTotal)
 }
+
 const addPlayerTwo = () => {
-  let playerTwoTotal = 0
+  playerTwoTotal = 0
   playerTwo.forEach(card => {
     playerTwoTotal += card.value
   })
-  console.log(playerTwoTotal)
+  // console.log(playerTwo)
+  // console.log(playerTwoTotal)
 }
 
-// if (this.playerOneTotal > 21) {
-//   document.querySelector('display-result').textContent = 'BUST'
+const hitPlayerOne = () => {
+  playerOne.push(deck.pop())
+  addPlayerOne()
+  createCardImage()
+  // playerOneTotal += card.value
+}
+// if (hitPlayerOne){
+
 // }
-// if (playerOneTotal < 21) {
-// }
+
+const gameLogic = () => {
+  if (playerOneTotal === 21) {
+    const createWinner = document.createElement('img')
+    createWinner.src = '/images/winner.png'
+    document.querySelector('.display-winner').appendChild(createWinner)
+  }
+}
 
 const main = () => {
   createDeck()
   dealCards()
-  addPlayerOne()
-  addPlayerTwo()
+  gameLogic()
 }
-// document.addEventListener('click', hitPlayerOne)
+document.addEventListener('click', hitPlayerOne)
 document.addEventListener('DOMContentLoaded', main)
 
 // document.querySelector('.container').addEventListener('click', chooseCard)
 
 // document.addEventListener('click', dealcards)
 
+// const add = (a, b) => {
+//   return a.value + b.value
+// }
+
+// const playerTwoTotal = playerTwo.reduce(add)
 // let deckTotal = 0
 // playerDeck.forEach(card => {
 //   deckTotal += card.value
