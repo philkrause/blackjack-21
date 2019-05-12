@@ -1,10 +1,14 @@
-// let chooseCard = () => {
-//   const cardHolder = document.createElement('section')
-//   cardHolder.textContent = deck[randomCard]
-//   document.querySelector('.container').appendChild(cardHolder)
-//   console.log(chooseCard)
-// }
+let chooseCard = () => {
+  const cardHolder = document.createElement('section')
+  cardHolder.textContent = deck[randomCard]
+  document.querySelector('.container').appendChild(cardHolder)
+  console.log(chooseCard)
+}
 //
+const playerOne = []
+const playerTwo = []
+let playerOneTotal = 0
+let playerTwoTotal = 0
 
 const suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
 
@@ -44,20 +48,14 @@ let createDeck = () => {
 }
 
 const shuffle = () => {
-  let deckLength = deck.length - 1 // Define the length of the deck
+  let deckLength = deck.length - 1
   for (deckLength; deckLength >= 1; deckLength--) {
-    // Go through entire deck
-    const randomNum = Math.floor(Math.random() * (deckLength + 1)) // Choose a random Card
-    const cardHolder = deck[deckLength] // Place the first card (of the remaining deck) into an empty variable
-    deck[deckLength] = deck[randomNum] // Take a random card and put it at the bottom of the remaining deck
-    deck[randomNum] = cardHolder // Place the card we first took, into the where we pulled the random card was.
+    const randomNum = Math.floor(Math.random() * (deckLength + 1))
+    const cardHolder = deck[deckLength]
+    deck[deckLength] = deck[randomNum]
+    deck[randomNum] = cardHolder
   }
 }
-
-const playerOne = []
-const playerTwo = []
-let playerOneTotal = 0
-let playerTwoTotal = 0
 
 const dealCards = () => {
   for (i = 2; i > 0; i--) {
@@ -70,20 +68,31 @@ const dealCards = () => {
     document.querySelector('.player-one-cards').appendChild(createP1CardElement)
   })
   addPlayerOne()
+  addPlayerTwo()
   playerTwo.forEach(p2card => {
     const createP2CardElement = document.createElement('img')
     createP2CardElement.src = p2card.imageUrl
     document.querySelector('.player-two-cards').appendChild(createP2CardElement)
   })
-  addPlayerTwo()
+  console.log(playerOne)
+  console.log(playerOneTotal)
+  console.log(playerTwo)
+  console.log(playerTwoTotal)
 }
 
-const createCardImage = () => {
-  playerOne.forEach(p1card => {
-    const createP1CardElement = document.createElement('img')
-    createP1CardElement.src = p1card.imageUrl
-    document.querySelector('.player-one-cards').appendChild(createP1CardElement)
-  })
+const createCardImage = p1card => {
+  const createP1CardElement = document.createElement('img')
+  createP1CardElement.src = p1card.imageUrl
+  document.querySelector('.player-one-cards').appendChild(createP1CardElement)
+}
+const createCardImageP2 = p2card => {
+  const createP2CardElement = document.createElement('img')
+  createP2CardElement.src = p2card.imageUrl
+  document.querySelector('.player-two-cards').appendChild(createP2CardElement)
+}
+const createReset = () => {
+  const cr = document.createElement('button')
+  document.querySelector('.reset-button').appendChild(cr)
 }
 
 const addPlayerOne = () => {
@@ -91,8 +100,6 @@ const addPlayerOne = () => {
   playerOne.forEach(card => {
     playerOneTotal += card.value
   })
-  // console.log(playerOne)
-  // console.log(playerOneTotal)
 }
 
 const addPlayerTwo = () => {
@@ -100,127 +107,74 @@ const addPlayerTwo = () => {
   playerTwo.forEach(card => {
     playerTwoTotal += card.value
   })
-  // console.log(playerTwo)
-  // console.log(playerTwoTotal)
+  //   console.log(playerTwo)
+  //  console.log(playerTwoTotal)
 }
-
-const hitPlayerOne = () => {
-  playerOne.push(deck.pop())
-  addPlayerOne()
-  createCardImage()
-  // playerOneTotal += card.value
+const disableButtons = () => {
+  document
+    .querySelectorAll('button')
+    .forEach(button => (button.disabled = true))
 }
-// if (hitPlayerOne){
-
-// }
-
-const gameLogic = () => {
+const p1gameLogic = () => {
   if (playerOneTotal === 21) {
     const createWinner = document.createElement('img')
     createWinner.src = '/images/winner.png'
     document.querySelector('.display-winner').appendChild(createWinner)
+    disableButtons()
+    createReset()
+  }
+  if (playerOneTotal > 21) {
+    const createWinner = document.createElement('img')
+    createWinner.src = '/images/busted.png'
+    document
+      .querySelectorAll('button')
+      .forEach(button => (button.disabled = true))
+    document.querySelector('.display-loser').appendChild(createWinner)
+    disableButtons()
+    createReset()
+  }
+}
+const hitPlayerOne = () => {
+  playerOne.push(deck.pop())
+  addPlayerOne()
+  createCardImage(playerOne[playerOne.length - 1])
+  p1gameLogic()
+}
+const hitPlayerTwo = () => {
+  playerTwo.push(deck.pop())
+  addPlayerTwo()
+  createCardImageP2(playerTwo[playerTwo.length - 1])
+}
+
+if (playerOneTotal < 21) {
+  document.querySelector('.hit-button').addEventListener('click', hitPlayerOne)
+}
+
+const stay = () => {
+  while (playerTwoTotal < 21) {
+    hitPlayerTwo()
+    disableButtons()
+    console.log(playerTwo)
+    console.log(playerTwoTotal)
+  }
+
+  if (playerTwoTotal === 21) {
+    const bjP2 = document.createElement('img')
+    bjP2.src = '/images/dealer21.gif'
+    document.querySelector('.display-p2-winner').appendChild(bjP2)
+    createReset()
+  }
+  if (playerTwoTotal > 21) {
+    createReset()
   }
 }
 
 const main = () => {
   createDeck()
   dealCards()
-  gameLogic()
 }
-document.addEventListener('click', hitPlayerOne)
+document
+  .querySelector('.reset-button')
+  .addEventListener('click', window.location.reload())
+document.querySelector('.stay-button').addEventListener('click', stay)
 document.addEventListener('DOMContentLoaded', main)
-
-// document.querySelector('.container').addEventListener('click', chooseCard)
-
-// document.addEventListener('click', dealcards)
-
-// const add = (a, b) => {
-//   return a.value + b.value
-// }
-
-// const playerTwoTotal = playerTwo.reduce(add)
-// let deckTotal = 0
-// playerDeck.forEach(card => {
-//   deckTotal += card.value
-// })
-
-//const imageArray = [
-//   '/images/2_of_clubs.svg',
-//   '/images/2_of_diamonds.svg',
-//   '/images/2_of_hearts.svg',
-//   '/images/2_of_spades.svg',
-//   '/images/3_of_clubs.svg',
-//   '/images/3_of_diamonds.svg',
-//   '/images/3_of_hearts.svg',
-//   '/images/3_of_spades.svg',
-//   '/images/4_of_clubs.svg',
-//   '/images/4_of_diamonds.svg',
-//   '/images/4_of_hearts.svg',
-//   '/images/4_of_spades.svg',
-//   '/images/5_of_clubs.svg',
-//   '/images/5_of_diamonds.svg',
-//   '/images/5_of_hearts.svg',
-//   '/images/5_of_spades.svg',
-//   '/images/6_of_clubs.svg',
-//   '/images/6_of_diamonds.svg',
-//   '/images/6_of_hearts.svg',
-//   '/images/6_of_spades.svg',
-//   '/images/7_of_clubs.svg',
-//   '/images/7_of_diamonds.svg',
-//   '/images/7_of_hearts.svg',
-//   '/images/7_of_spades.svg',
-//   '/images/8_of_clubs.svg',
-//   '/images/8_of_diamonds.svg',
-//   '/images/8_of_hearts.svg',
-//   '/images/8_of_spades.svg',
-//   '/images/9_of_clubs.svg',
-//   '/images/9_of_diamonds.svg',
-//   '/images/9_of_hearts.svg',
-//   '/images/9_of_spades.svg',
-//   '/images/10_of_clubs.svg',
-//   '/images/10_of_diamonds.svg',
-//   '/images/10_of_hearts.svg',
-//   '/images/10_of_spades.svg',
-//   '/images/ace_of_clubs.svg',
-//   '/images/ace_of_diamonds.svg',
-//   '/images/ace_of_hearts.svg',
-//   '/images/ace_of_spades.svg',
-//   '/images/jack_of_clubs.svg',
-//   '/images/jack_of_diamonds.svg',
-//   '/images/jack_of_hearts.svg',
-//   '/images/jack_of_spades.svg',
-//   '/images/king_of_clubs.svg',
-//   '/images/king_of_diamonds.svg',
-//   '/images/king_of_hearts.svg',
-//   '/images/king_of_spades.svg',
-//   '/images/queen_of_clubs.svg',
-//   '/images/queen_of_diamonds.svg',
-//   '/images/queen_of_hearts.svg',
-//   '/images/queen_of_spades.svg'
-// ]
-// const deck = []
-// const suit = 4
-// const rank = 13
-
-// let makeDeck = () => {
-//   suit.forEach(suit => {
-//     rank.forEach(rank => {
-//       deck.push(rank + suit)
-//       console.log(makeDeck)
-//     })
-//   })
-// }
-
-// const makeDeck = () => {
-//   for (let x = 0; x <= cardNum.length - 1; x++) {
-//     for (let y = 0; y <= cardSuit.length - 1; y++) {
-//       deck.push(cardNum[x] + ' ' + 'of' + ' ' + cardSuit[y])
-//       console.log(deck)
-//     }
-//   }
-// }
-//    color.forEach(color =>{
-//     position.forEach(position => {
-//       chessSet.push(color + position)
-//     })
-// })
