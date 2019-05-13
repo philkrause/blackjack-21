@@ -1,10 +1,3 @@
-let chooseCard = () => {
-  const cardHolder = document.createElement('section')
-  cardHolder.textContent = deck[randomCard]
-  document.querySelector('.container').appendChild(cardHolder)
-  console.log(chooseCard)
-}
-//
 const playerOne = []
 const playerTwo = []
 let playerOneTotal = 0
@@ -25,7 +18,7 @@ const ranks = [
   { face: 'Jack', value: 10 },
   { face: 'King', value: 10 },
   { face: 'Queen', value: 10 },
-  { face: 'Ace', value: 1 }
+  { face: 'Ace', value: 11 }
 ]
 
 const deck = []
@@ -56,7 +49,24 @@ const shuffle = () => {
     deck[randomNum] = cardHolder
   }
 }
-
+const createCardImage = p1card => {
+  const createP1CardElement = document.createElement('img')
+  createP1CardElement.src = p1card.imageUrl
+  document.querySelector('.player-one-cards').appendChild(createP1CardElement)
+}
+const createCardImageP2 = p2card => {
+  const createP2CardElement = document.createElement('img')
+  createP2CardElement.src = p2card.imageUrl
+  document.querySelector('.player-two-cards').appendChild(createP2CardElement)
+}
+const createLosers = () => {
+  const createLoser = document.createElement('img')
+  createLoser.src = '/images/busted.png'
+  document
+    .querySelectorAll('button')
+    .forEach(button => (button.disabled = true))
+  document.querySelector('.display-loser').appendChild(createLoser)
+}
 const dealCards = () => {
   for (i = 2; i > 0; i--) {
     playerOne.push(deck.pop())
@@ -74,25 +84,16 @@ const dealCards = () => {
     createP2CardElement.src = p2card.imageUrl
     document.querySelector('.player-two-cards').appendChild(createP2CardElement)
   })
-  console.log(playerOne)
-  console.log(playerOneTotal)
-  console.log(playerTwo)
-  console.log(playerTwoTotal)
 }
 
-const createCardImage = p1card => {
-  const createP1CardElement = document.createElement('img')
-  createP1CardElement.src = p1card.imageUrl
-  document.querySelector('.player-one-cards').appendChild(createP1CardElement)
-}
-const createCardImageP2 = p2card => {
-  const createP2CardElement = document.createElement('img')
-  createP2CardElement.src = p2card.imageUrl
-  document.querySelector('.player-two-cards').appendChild(createP2CardElement)
-}
 const createReset = () => {
   const cr = document.createElement('button')
+  // cr.setAttribute('input')
   document.querySelector('.reset-button').appendChild(cr)
+}
+
+const reload = () => {
+  window.location.reload()
 }
 
 const addPlayerOne = () => {
@@ -100,6 +101,7 @@ const addPlayerOne = () => {
   playerOne.forEach(card => {
     playerOneTotal += card.value
   })
+  console.log(playerOneTotal)
 }
 
 const addPlayerTwo = () => {
@@ -108,73 +110,103 @@ const addPlayerTwo = () => {
     playerTwoTotal += card.value
   })
   //   console.log(playerTwo)
-  //  console.log(playerTwoTotal)
+  console.log(playerTwoTotal)
 }
-const disableButtons = () => {
-  document
-    .querySelectorAll('button')
-    .forEach(button => (button.disabled = true))
+const disableButton1 = () => {
+  document.querySelector('.hit-button').disabled = true
 }
-const p1gameLogic = () => {
-  if (playerOneTotal === 21) {
-    const createWinner = document.createElement('img')
-    createWinner.src = '/images/winner.png'
-    document.querySelector('.display-winner').appendChild(createWinner)
-    disableButtons()
-    createReset()
-  }
-  if (playerOneTotal > 21) {
-    const createWinner = document.createElement('img')
-    createWinner.src = '/images/busted.png'
-    document
-      .querySelectorAll('button')
-      .forEach(button => (button.disabled = true))
-    document.querySelector('.display-loser').appendChild(createWinner)
-    disableButtons()
-    createReset()
-  }
+const disableButton2 = () => {
+  document.querySelector('.stay-button').disabled = true
 }
+
 const hitPlayerOne = () => {
   playerOne.push(deck.pop())
   addPlayerOne()
   createCardImage(playerOne[playerOne.length - 1])
-  p1gameLogic()
-}
-const hitPlayerTwo = () => {
-  playerTwo.push(deck.pop())
-  addPlayerTwo()
-  createCardImageP2(playerTwo[playerTwo.length - 1])
+  if (playerOneTotal > 21) {
+    createLosers()
+    disableButton1()
+    disableButton2()
+    createReset()
+  }
 }
 
-if (playerOneTotal < 21) {
-  document.querySelector('.hit-button').addEventListener('click', hitPlayerOne)
+const hitPlayerTwo = () => {
+  while (playerTwoTotal < 17) {
+    playerTwo.push(deck.pop())
+    addPlayerTwo()
+    createCardImageP2(playerTwo[playerTwo.length - 1])
+  }
+}
+const blackJack = () => {
+  if (playerOneTotal === 21) {
+    const createWinner = document.createElement('img')
+    createWinner.src = '/images/winner.png'
+    document.querySelector('.display-winner').appendChild(createWinner)
+    disableButton1()
+    disableButton2()
+    createReset()
+  }
 }
 
 const stay = () => {
-  while (playerTwoTotal < 21) {
-    hitPlayerTwo()
-    disableButtons()
-    console.log(playerTwo)
-    console.log(playerTwoTotal)
-  }
+  hitPlayerTwo()
+  disableButton1()
+  disableButton2()
 
+  if (playerOneTotal > playerTwoTotal && playerTwoTotal > 16) {
+    const createWinner = document.createElement('img')
+    createWinner.src = '/images/winner2.png'
+    document.querySelector('.display-winner').appendChild(createWinner)
+    disableButton1()
+    disableButton2()
+    createReset()
+  }
+  if (playerTwoTotal < 21 && playerTwoTotal > playerOneTotal) {
+    const bjP2 = document.createElement('img')
+    bjP2.src = '/images/youlose.gif'
+    document.querySelector('.display-p2-winner').appendChild(bjP2)
+    disableButton1()
+    disableButton2()
+    createReset()
+  }
+  if (playerTwoTotal > 21) {
+    const createWinner = document.createElement('img')
+    createWinner.src = '/images/win.gif'
+    document.querySelector('.display-winner').appendChild(createWinner)
+    const createWin = document.createElement('img')
+    createWin.src = '/images/bustEdit.png'
+    document.querySelector('.display-loser').appendChild(createWin)
+    disableButton1()
+    disableButton2()
+    createReset()
+  }
+  if (playerOneTotal === playerTwoTotal) {
+    const createWinner = document.createElement('img')
+    createWinner.src = '/images/draw.png'
+    document.querySelector('.display-winner').appendChild(createWinner)
+    disableButton1()
+    disableButton2()
+    createReset()
+  }
   if (playerTwoTotal === 21) {
     const bjP2 = document.createElement('img')
     bjP2.src = '/images/dealer21.gif'
     document.querySelector('.display-p2-winner').appendChild(bjP2)
+    disableButton1()
+    disableButton2()
     createReset()
   }
-  if (playerTwoTotal > 21) {
-    createReset()
-  }
+  console.log(playerOneTotal)
+  console.log(playerTwoTotal)
 }
 
 const main = () => {
   createDeck()
   dealCards()
+  blackJack()
 }
-document
-  .querySelector('.reset-button')
-  .addEventListener('click', window.location.reload())
+document.querySelector('.hit-button').addEventListener('click', hitPlayerOne)
+document.querySelector('.reset-button').addEventListener('click', reload)
 document.querySelector('.stay-button').addEventListener('click', stay)
 document.addEventListener('DOMContentLoaded', main)
