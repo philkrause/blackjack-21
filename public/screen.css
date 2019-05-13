@@ -36,9 +36,10 @@ body {
   height: 50%;
   margin-top: 10%;
 }
+
 .player-one-cards img {
   padding-top: 10%;
-  width: 9%;
+  width: 5rem;
   height: auto;
 }
 
@@ -47,12 +48,21 @@ body {
 }
 
 .player-two-cards img {
-  width: 9%;
+  width: 5rem;
   height: auto;
+  position:relative;
 }
 .player-two-cards :first-child {
   margin-left: 37%;
 }
+.card-container > img {
+  width:5rem;
+  height:7.25rem;
+  position:absolute;
+  padding-left:29.5%;
+  
+}
+
 
 .button-container {
   height: auto;
@@ -95,7 +105,7 @@ body {
   justify-content: center;
   z-index: 1;
   position: absolute;
-  margin-top: -11%;
+  margin-top: -31%;
   margin-right: 10%;
 }
 .display-p2-winner {
@@ -108,8 +118,8 @@ body {
 }
 
 .display-p2-winner img{
-  padding-left: 21vw;
-  padding-top: 43vh;
+  padding-left: 23vw;
+  padding-top: 28vh;
   width: 100%;
   height:auto:
 }
@@ -141,3 +151,7 @@ body {
   margin-left: 1rem;
 }
 
+audio {
+ padding-top: 3rem;
+
+}

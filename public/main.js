@@ -61,7 +61,7 @@ const createCardImageP2 = p2card => {
 }
 const createLosers = () => {
   const createLoser = document.createElement('img')
-  createLoser.src = '/images/busted.png'
+  createLoser.src = '/images/bustEdit.png'
   document
     .querySelectorAll('button')
     .forEach(button => (button.disabled = true))
@@ -77,18 +77,18 @@ const dealCards = () => {
     createP1CardElement.src = p1card.imageUrl
     document.querySelector('.player-one-cards').appendChild(createP1CardElement)
   })
-  addPlayerOne()
-  addPlayerTwo()
+
   playerTwo.forEach(p2card => {
     const createP2CardElement = document.createElement('img')
     createP2CardElement.src = p2card.imageUrl
     document.querySelector('.player-two-cards').appendChild(createP2CardElement)
   })
+  addPlayerOne()
+  addPlayerTwo()
 }
 
 const createReset = () => {
   const cr = document.createElement('button')
-  // cr.setAttribute('input')
   document.querySelector('.reset-button').appendChild(cr)
 }
 
@@ -109,8 +109,6 @@ const addPlayerTwo = () => {
   playerTwo.forEach(card => {
     playerTwoTotal += card.value
   })
-  //   console.log(playerTwo)
-  console.log(playerTwoTotal)
 }
 const disableButton1 = () => {
   document.querySelector('.hit-button').disabled = true
@@ -129,6 +127,7 @@ const hitPlayerOne = () => {
     disableButton2()
     createReset()
   }
+  blackJack()
 }
 
 const hitPlayerTwo = () => {
@@ -148,15 +147,20 @@ const blackJack = () => {
     createReset()
   }
 }
+const revealCard = () => {
+  const grab = document.querySelector('.card-container')
+  grab.removeChild(grab.childNodes[5])
+}
 
 const stay = () => {
   hitPlayerTwo()
   disableButton1()
   disableButton2()
+  revealCard()
 
   if (playerOneTotal > playerTwoTotal && playerTwoTotal > 16) {
     const createWinner = document.createElement('img')
-    createWinner.src = '/images/winner2.png'
+    createWinner.src = '/images/win.gif'
     document.querySelector('.display-winner').appendChild(createWinner)
     disableButton1()
     disableButton2()
@@ -184,7 +188,7 @@ const stay = () => {
   if (playerOneTotal === playerTwoTotal) {
     const createWinner = document.createElement('img')
     createWinner.src = '/images/draw.png'
-    document.querySelector('.display-winner').appendChild(createWinner)
+    document.querySelector('.display-loser').appendChild(createWinner)
     disableButton1()
     disableButton2()
     createReset()
@@ -197,8 +201,6 @@ const stay = () => {
     disableButton2()
     createReset()
   }
-  console.log(playerOneTotal)
-  console.log(playerTwoTotal)
 }
 
 const main = () => {
