@@ -6,4 +6,4 @@ Playable [Here](https://dealer-phil.netlify.com)
 
 This was built with _VanillaJS_ as an assignment for the [Suncoast Developer's Guild](https://suncoast.io/)
 
-
+Playable [Here](https://dealer-phil.netlify.com)
