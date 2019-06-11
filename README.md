@@ -1,6 +1,5 @@
 # Blackjack 21
 Playable [Here](https://dealer-phil.netlify.com)
-
 ![](Blackjack.gif)
 
 
