@@ -2,4 +2,5 @@
 
 ![](Blackjack.gif)
 
-Made with Vanilla JS for an assignment and the [Suncoast Developer's Guild](https://suncoast.io/)
+*Build for an assignment @ [Suncoast Developer's Guild](https://suncoast.io/)
+*Vanilla JS
