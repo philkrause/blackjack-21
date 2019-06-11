@@ -2,6 +2,7 @@
 
 ![](Blackjack.gif)
 
-*Build for an assignment @ [Suncoast Developer's Guild](https://suncoast.io/)
 
-**Vanilla JS
+This was built for an assignment for the [Suncoast Developer's Guild](https://suncoast.io/) with _VanillaJS_
+
+
