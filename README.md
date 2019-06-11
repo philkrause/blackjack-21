@@ -1,2 +1,2 @@
 # Blackjack 21
-![]blackjack.gif
+!(blackjack.gif)
